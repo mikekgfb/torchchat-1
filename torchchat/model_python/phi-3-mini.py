@@ -17,7 +17,7 @@ def model_builder(builder_args) -> nn.Module:
     # let's get a default config SentencePiece
     # PS: Mostly default values, but we assert it in the constructor for documentation
     model.config = ModelArgs(
-        transformer_args=None,
+        transformer_args={},
         model_type=ModelType.TextOnly,
         use_tiktoken=False)
     print(model)
