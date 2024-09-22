@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 
 from transformers import AutoModelForCausalLM # , AutoTokenizer, pipeline
-
+from torchchat.model import TransformerArgs
 
 def model_builder(builder_args) -> nn.Module:
     torch.random.manual_seed(0)
@@ -14,6 +14,9 @@ def model_builder(builder_args) -> nn.Module:
         trust_remote_code=True,
     )
 
+    # let's get a default config SentencePiece
+    # PS: SentencePiece is the default, but we assert it in the constructor for documentation
+    model.config = TransformerArgs(use_tiktoken=False)
     print(model)
 
     return model
