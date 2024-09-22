@@ -476,14 +476,14 @@ def _load_model(builder_args: BuilderArgs) -> Model:
             module_name = "custom_loader"
             spec = importlib.util.spec_from_file_location(module_name, filename)
             custom_builder_module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(custom_builder)
+            spec.loader.exec_module(custom_builder_module)
 
-            if hasattr(custom_builder, function_name):
+            if hasattr(custom_builder_module, function_name):
                custom_builder = getattr(custom_builder_module, function_name)
             else: 
                print(f"Function '{function_name}' not found in '{filename}'")
-        model = customer_builder(builder_args)
-    if builder_args.gguf_path:
+        model = custom_builder(builder_args)
+    elif builder_args.gguf_path:
         model = _load_model_gguf(builder_args)
     elif builder_args.use_distributed:
         model = _init_model_on_meta_device(builder_args)
