@@ -61,7 +61,7 @@ class BuilderArgs:
     prefill_possible: bool = False
     dynamic_shapes: bool = False
     max_seq_length: Optional[int] = None
-    custom_builder = Optional[str] = None
+    custom_builder: Optional[str] = None
 
     def __post_init__(self):
         if self.device is None:
