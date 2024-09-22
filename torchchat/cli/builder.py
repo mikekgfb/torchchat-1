@@ -471,9 +471,8 @@ def _load_model(builder_args: BuilderArgs) -> Model:
             import importlib.util
             import os
 
-            # custom_builder = "filename.py:function"
-
-            filename, function_name = string.split(':')
+            # custom_builder == "filename.py:function"
+            filename, function_name = custom_builder.split(':')
             module_name = "custom_loader"
             spec = importlib.util.spec_from_file_location(module_name, filename)
             custom_builder_module = importlib.util.module_from_spec(spec)
