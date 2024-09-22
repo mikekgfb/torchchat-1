@@ -104,6 +104,8 @@ class BuilderArgs:
         if hasattr(args, "dcp_dir"):
             dcp_dir = args.dcp_dir
 
+        builder_args.custom_builder = args.custom_builder
+
         checkpoint_path = args.checkpoint_path
         params_table = args.params_table
         if args.model:  # Using a named, well-known model
@@ -461,6 +463,26 @@ def _maybe_parellelize_model(
 
 def _load_model(builder_args: BuilderArgs) -> Model:
     world_mesh, parallel_dims = _maybe_init_distributed(builder_args)
+    if hasattr(builder_args, 'custom_builder') and (
+        builder_args.custom_builder is not None):
+        custom_builder = builder_args.custom_builder 
+        if isinstance(builder_args.custom_builder, str):
+            import importlib.util
+            import os
+
+            # custom_builder = "filename.py:function"
+
+            filename, function_name = string.split(':')
+            module_name = "custom_loader"
+            spec = importlib.util.spec_from_file_location(module_name, filename)
+            custom_builder_module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(custom_builder)
+
+            if hasattr(custom_builder, function_name):
+               custom_builder = getattr(custom_builder_module, function_name)
+            else: 
+               print(f"Function '{function_name}' not found in '{filename}'")
+        model = customer_builder(builder_args)
     if builder_args.gguf_path:
         model = _load_model_gguf(builder_args)
     elif builder_args.use_distributed:

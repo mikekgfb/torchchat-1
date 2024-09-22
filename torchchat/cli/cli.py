@@ -52,7 +52,7 @@ def check_args(args, verb: str) -> None:
         download_and_convert(args.model, args.model_directory, args.hf_token)
 
 
-# Given a arg parser and a subcommand (verb), add the appropriate arguments
+# Given an arg parser and a subcommand (verb), add the appropriate arguments
 # for that subcommand.
 def add_arguments_for_verb(parser, verb: str) -> None:
     # Argument closure for inventory related subcommands
@@ -119,6 +119,13 @@ def _add_model_specification_args(parser) -> None:
         default=None,
         help=argparse.SUPPRESS,
         # "Use the specified GGUF model file",
+    )
+
+    exclusive_parser.add_argument(
+        "--custom-builder",
+        type=str,
+        default=None,
+        help=argparse.SUPPRESS,
     )
 
     model_specification_parser.add_argument(
