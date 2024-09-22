@@ -5,7 +5,7 @@ import torch.nn as nn
 from transformers import AutoModelForCausalLM # , AutoTokenizer, pipeline
 
 
-def model_builder(**config) -> nn.Module:
+def model_builder(builder_args) -> nn.Module:
     torch.random.manual_seed(0)
     model = AutoModelForCausalLM.from_pretrained(
         "microsoft/Phi-3-mini-4k-instruct",
