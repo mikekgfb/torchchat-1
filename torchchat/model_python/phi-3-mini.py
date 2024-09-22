@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 
 from transformers import AutoModelForCausalLM # , AutoTokenizer, pipeline
-from torchchat.model import ModelArgs
+from torchchat.model import ModelArgs, ModelType
 
 def model_builder(builder_args) -> nn.Module:
     torch.random.manual_seed(0)
