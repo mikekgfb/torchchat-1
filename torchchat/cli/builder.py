@@ -200,6 +200,7 @@ class TokenizerArgs:
     t: Optional[Any] = None
 
     def __post_init__(self):
+        print("post init")
         try:
             from tokenizer.tiktoken import Tokenizer as TiktokenTokenizer
 
