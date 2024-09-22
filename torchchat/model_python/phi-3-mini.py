@@ -14,6 +14,8 @@ def model_builder(builder_args) -> nn.Module:
         trust_remote_code=True,
     )
 
+    print(model)
+
     return model
 
 
