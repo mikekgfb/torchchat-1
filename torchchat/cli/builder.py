@@ -201,6 +201,8 @@ class TokenizerArgs:
 
     def __post_init__(self):
         print("post init")
+        if not os.path.isfile(self.tokenizer_path):
+            print(f"File not found: {self.tokenizer_path}")
         try:
             from tokenizer.tiktoken import Tokenizer as TiktokenTokenizer
 
