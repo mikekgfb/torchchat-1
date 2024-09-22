@@ -61,6 +61,7 @@ class BuilderArgs:
     prefill_possible: bool = False
     dynamic_shapes: bool = False
     max_seq_length: Optional[int] = None
+    custom_builder = Optional[str] = None
 
     def __post_init__(self):
         if self.device is None:
@@ -103,8 +104,6 @@ class BuilderArgs:
             checkpoint_dir = args.checkpoint_dir
         if hasattr(args, "dcp_dir"):
             dcp_dir = args.dcp_dir
-
-        builder_args.custom_builder = args.custom_builder
 
         checkpoint_path = args.checkpoint_path
         params_table = args.params_table
@@ -177,6 +176,7 @@ class BuilderArgs:
             is_chat_model=is_chat_model,
             dynamic_shapes=getattr(args, "dynamic_shapes", False),
             max_seq_length=getattr(args, "max_seq_length", None),
+            custom_builder=args.custom_builder,
         )
 
     @classmethod
