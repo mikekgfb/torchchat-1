@@ -68,7 +68,8 @@ class BuilderArgs:
             self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
         if not (
-            (self.checkpoint_path and self.checkpoint_path.is_file())
+            self.custom_builder 
+            or (self.checkpoint_path and self.checkpoint_path.is_file())
             or (self.checkpoint_dir and self.checkpoint_dir.is_dir())
             or (self.gguf_path and self.gguf_path.is_file())
             or (self.dso_path and Path(self.dso_path).is_file())
