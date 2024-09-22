@@ -207,8 +207,8 @@ class TokenizerArgs:
             self.is_tiktoken = True
             self.is_sentencepiece = False
             return
-        except:
-            pass
+        except Exception as e:
+            print(f"Error loading TiktokenTokenizer: {e}")
 
         try:
             from sentencepiece import SentencePieceProcessor
@@ -217,8 +217,8 @@ class TokenizerArgs:
             self.is_tiktoken = False
             self.is_sentencepiece = True
             return
-        except:
-            pass
+        except Exception as e:
+            print(f"Error loading SentencePieceProcessor: {e}")
 
         self.is_tiktoken = False
         self.is_sentencepiece = False
