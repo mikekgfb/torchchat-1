@@ -8,6 +8,7 @@ from torchchat.model import ModelArgs, ModelType, TextOnlyModel, TransformerArgs
 
 class ModelWrapper(nn.Module):
     def __init__(self, config, model):
+        super().__init__()
         self.config = config
         self.model = model
 
