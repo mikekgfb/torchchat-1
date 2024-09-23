@@ -6,6 +6,27 @@ import types
 from transformers import AutoModelForCausalLM # , AutoTokenizer, pipeline
 from torchchat.model import ModelArgs, ModelType, TextOnlyModel, TransformerArgs
 
+def ModelWrapper(nn.Module):
+    def __init__(self. config, model):
+        self.config = config
+        self.model = model
+
+    def forward(self, *args, **kwargs) -> Tensor:
+        self.model.forward(*args, **kwargs)
+
+    def setup_caches(self, max_batch_size, dtype):
+        if hasattr(self.model, "setup_caches):
+            self.model.setup_caches(max_batch_size, dtype)
+        else:
+            print(f"setup caches for {self} ignored")
+
+    def reset_caches(self):
+        if hasattr(self.model, "reset_caches):
+            self.model.reset_caches()
+        else:
+            print(f"reset caches for {self} ignored")
+
+
 def model_builder(builder_args) -> nn.Module:
     torch.random.manual_seed(0)
     model = AutoModelForCausalLM.from_pretrained(
@@ -21,14 +42,8 @@ def model_builder(builder_args) -> nn.Module:
         transformer_args={},
         model_type=ModelType.TextOnly,
         use_tiktoken=False)
-    model.config = TransformerArgs()
-    import types
 
-    def setup_caches(self, max_batch_size, dtype):
-        print(f"setup caches for {self}, no-op")
-
-    model.setup_caches = types.MethodType(setup_caches, model)
-    print(model)
+    model = ModelWrapper(TransformerArgs(), model)
 
     model = TextOnlyModel(model_config, {"text" : model})
     print(model)
