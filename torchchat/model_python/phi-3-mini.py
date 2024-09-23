@@ -16,13 +16,14 @@ def model_builder(builder_args) -> nn.Module:
 
     # let's get a default config SentencePiece
     # PS: Mostly default values, but we assert it in the constructor for documentation
-    model.config = ModelArgs(
+    model_config = ModelArgs(
         transformer_args={},
         model_type=ModelType.TextOnly,
         use_tiktoken=False)
+    model.config = TransformerArgs()
     print(model)
 
-    model = TextOnlyModel(None, {"text" : model})
+    model = TextOnlyModel(model_config, {"text" : model})
     print(model)
     
     return model
