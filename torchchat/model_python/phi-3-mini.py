@@ -11,7 +11,7 @@ class ModelWrapper(nn.Module):
         self.config = config
         self.model = model
 
-    def forward(self, *args, **kwargs) -> Tensor:
+    def forward(self, *args, **kwargs) -> torch.Tensor:
         self.model.forward(*args, **kwargs)
 
     def setup_caches(self, max_batch_size, dtype):
