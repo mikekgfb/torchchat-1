@@ -24,7 +24,7 @@ def model_builder(builder_args) -> nn.Module:
     model.config = TransformerArgs()
     import types
 
-    def setup_caches(self):
+    def setup_caches(self, max_batch_size, dtype):
         print(f"setup caches for {self}, no-op")
 
     model.setup_caches = types.MethodType(setup_caches, model)
