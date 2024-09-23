@@ -433,10 +433,10 @@ class Model(ABC, nn.Module):
     The entrance for model construction in torchchat.
     """
 
-    def __init__(self, config: ModelArgs, pre_built_models: Optional[Dict]=None) -> None:
+    def __init__(self, config: ModelArgs, pre_built_modules: Optional[Dict]=None) -> None:
         super().__init__()
         self.config = config
-        self.model = self.build_model(pre_built_models)
+        self.model = self.build_model(pre_built_modules)
 
         # text_transformer_args represents the args for the text transformer in the model.
         # It should be assigned in the actual model implementation, if any.
@@ -453,7 +453,7 @@ class Model(ABC, nn.Module):
         recipe = ModelRecipe.get_recipe(self.config.model_type)
         modules = {}
         for name, module_class in recipe.modules.items():
-            if pre_built_models is not None and pre_built_modules.get(name, None):
+            if pre_built_modules is not None and pre_built_modules.get(name, None):
                 modules[name]=pre_built_modules[name]
             else:
                 config_args = self.config.transformer_args[name]
