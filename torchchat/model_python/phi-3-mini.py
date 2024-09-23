@@ -13,7 +13,8 @@ class ModelWrapper(nn.Module):
         self.model = model
 
     def forward(self, *args, **kwargs) -> torch.Tensor:
-        return self.model.forward(*args, **kwargs)
+        outputs = self.model.forward(*args, **kwargs)
+        return outputs.logits
 
     def setup_caches(self, max_batch_size, dtype):
         if hasattr(self.model, "setup_caches"):
