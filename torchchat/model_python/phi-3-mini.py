@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 
 from transformers import AutoModelForCausalLM # , AutoTokenizer, pipeline
-from torchchat.model import ModelArgs, ModelType
+from torchchat.model import ModelArgs, ModelType, TextOnlyModel
 
 def model_builder(builder_args) -> nn.Module:
     torch.random.manual_seed(0)
@@ -22,6 +22,9 @@ def model_builder(builder_args) -> nn.Module:
         use_tiktoken=False)
     print(model)
 
+    model = TextOnlyModel(None, {"text" : model})
+    print(model)
+    
     return model
 
 
