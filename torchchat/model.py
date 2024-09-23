@@ -433,16 +433,16 @@ class Model(ABC, nn.Module):
     The entrance for model construction in torchchat.
     """
 
-    def __init__(self, config: ModelArgs) -> None:
+    def __init__(self, config: ModelArgs, pre_built_models: Optional[Dict]=None) -> None:
         super().__init__()
         self.config = config
-        self.model = self.build_model()
+        self.model = self.build_model(pre_built_models)
 
         # text_transformer_args represents the args for the text transformer in the model.
         # It should be assigned in the actual model implementation, if any.
         self.text_transformer_args = None
 
-    def build_model(self) -> nn.Module:
+    def build_model(self, pre_built_modules: Optional[Dict]=None) -> nn.Module:
         """
         Builds a model based on the provided configuration.
         This method retrieves a ModelRecipe instance corresponding to the specified model type,
@@ -454,7 +454,9 @@ class Model(ABC, nn.Module):
         modules = {}
         for name, module_class in recipe.modules.items():
             config_args = self.config.transformer_args[name]
-            if module_class == Transformer:
+            if pre_built_models is not None and pre_built_modules.get(name, None):
+                modules[name]=pre_built_modules[name]
+            elif module_class == Transformer:
                 modules[name] = module_class(TransformerArgs.from_params(config_args))
             else:
                 modules[name] = module_class(**config_args)
@@ -510,8 +512,8 @@ class Model(ABC, nn.Module):
 
 
 class TextOnlyModel(Model):
-    def __init__(self, config: ModelArgs) -> None:
-        super().__init__(config)
+    def __init__(self, config: ModelArgs, pre_built_modules: Optional[Dict]=None) -> None:
+        super().__init__(config, pre_built_modules)
         self.text_transformer_args = self.model.config
 
     def forward(self, tokens: Tensor, input_pos: Optional[Tensor] = None) -> Tensor:
