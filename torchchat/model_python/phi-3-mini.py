@@ -15,13 +15,13 @@ def ModelWrapper(nn.Module):
         self.model.forward(*args, **kwargs)
 
     def setup_caches(self, max_batch_size, dtype):
-        if hasattr(self.model, "setup_caches):
+        if hasattr(self.model, "setup_caches"):
             self.model.setup_caches(max_batch_size, dtype)
         else:
             print(f"setup caches for {self} ignored")
 
     def reset_caches(self):
-        if hasattr(self.model, "reset_caches):
+        if hasattr(self.model, "reset_caches"):
             self.model.reset_caches()
         else:
             print(f"reset caches for {self} ignored")
