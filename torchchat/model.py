@@ -453,13 +453,14 @@ class Model(ABC, nn.Module):
         recipe = ModelRecipe.get_recipe(self.config.model_type)
         modules = {}
         for name, module_class in recipe.modules.items():
-            config_args = self.config.transformer_args[name]
             if pre_built_models is not None and pre_built_modules.get(name, None):
                 modules[name]=pre_built_modules[name]
-            elif module_class == Transformer:
-                modules[name] = module_class(TransformerArgs.from_params(config_args))
             else:
-                modules[name] = module_class(**config_args)
+                config_args = self.config.transformer_args[name]
+                if module_class == Transformer:
+                    modules[name] = module_class(TransformerArgs.from_params(config_args))
+                else:
+                    modules[name] = module_class(**config_args)
 
         return recipe.fusion_class(**modules)
     
