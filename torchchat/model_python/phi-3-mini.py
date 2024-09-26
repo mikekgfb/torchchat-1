@@ -18,7 +18,7 @@ class ModelWrapper(nn.Module):
             # print(f"args: {args} kwargs: {kwargs}")
             outputs = self.model.generate(input_ids=x, max_new_tokens=1, do_sample=False,)
             # print(f"outputs.logits: {outputs.logits}")
-            return outputs[:, -1:, ].
+            return outputs[:, -1:, ]
 
     def setup_caches(self, max_batch_size, dtype):
         if hasattr(self.model, "setup_caches"):
