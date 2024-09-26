@@ -38,6 +38,7 @@ def model_builder(builder_args) -> nn.Module:
         device_map="cuda",
         torch_dtype="auto",
         trust_remote_code=True,
+        do_sample=False,
     )
 
     # let's get a default config SentencePiece
