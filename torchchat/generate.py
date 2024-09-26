@@ -694,12 +694,12 @@ class Generator:
 
     def encode_tokens(self, string, bos=True, device="cpu"):
         pattern = r'^\[\s*([\d]+)(?:\s*,\s*([\d]+))*\s*\]$'
-        match = re.match(pattern, s)
+        match = re.match(pattern, string)
 
         # tokenize, unless getting a token sequence of type "[a,b,c,d,...]"
         if match:
             # Extract values, remove whitespace and split by comma
-            values = [int(x) for x in s[1:-1].split(',')]
+            values = [int(x) for x in string[1:-1].split(',')]
         
             # Generate a PyTorch tensor with long integers
             tensor = torch.tensor(values, dtype=torch.int64)
