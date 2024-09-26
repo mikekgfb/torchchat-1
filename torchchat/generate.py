@@ -692,9 +692,21 @@ class Generator:
         yield None, generate_stats
 
     def encode_tokens(self, string, bos=True, device="cpu"):
-        tokens = self.tokenizer.encode(string)
-        if bos:
-            tokens = [self.tokenizer.bos_id()] + tokens
+        pattern = r'^\[\s*([\d]+)(?:\s*,\s*([\d]+))*\s*\]$'
+        match = re.match(pattern, s)
+
+        # tokenize, unless getting a token sequence of type "[a,b,c,d,...]"
+        if match:
+            # Extract values, remove whitespace and split by comma
+            values = [int(x) for x in s[1:-1].split(',')]
+        
+            # Generate a PyTorch tensor with long integers
+            tensor = torch.tensor(values, dtype=torch.int64)
+        else:
+            tokens = self.tokenizer.encode(string)
+            if bos:
+                tokens = [self.tokenizer.bos_id()] + tokens
+                
         logging.debug(f"Size after encode_tokens: {len(tokens)}")
         return torch.tensor(tokens, dtype=torch.int, device=device)
 
