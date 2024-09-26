@@ -677,7 +677,7 @@ class Transformer(nn.Module):
             x = self.norm(x)
         if self.output:
             x = self.output(x)
-        # print(f"output shape: {x.shape}")
+        print(f"output shape: {x.shape}")
         return x
 
 
