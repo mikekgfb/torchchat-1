@@ -702,7 +702,7 @@ class Generator:
             values = [int(x) for x in string[1:-1].split(',')]
         
             # Generate a PyTorch tensor with long integers
-            tensor = torch.tensor(values, dtype=torch.int64)
+            tokens = torch.tensor(values, dtype=torch.int64)
         else:
             tokens = self.tokenizer.encode(string)
             if bos:
