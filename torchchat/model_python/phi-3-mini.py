@@ -10,13 +10,14 @@ class ModelWrapper(nn.Module):
     def __init__(self, config, model):
         super().__init__()
         self.config = config
-        self.model = model
+        self.model = model.eval()
 
     def forward(self, *args, **kwargs) -> torch.Tensor:
-        # print(f"args: {args} kwargs: {kwargs}")
-        outputs = self.model.generate(*args, **kwargs,  max_new_tokens=1, do_sample=False,)
-        # print(f"outputs.logits: {outputs.logits}")
-        return outputs.logits[:, -1:, ]
+        with torch.no_grad():
+            # print(f"args: {args} kwargs: {kwargs}")
+            outputs = self.model.generate(*args, **kwargs,  max_new_tokens=1, do_sample=False,)
+            # print(f"outputs.logits: {outputs.logits}")
+            return outputs.logits[:, -1:, ]
 
     def setup_caches(self, max_batch_size, dtype):
         if hasattr(self.model, "setup_caches"):
