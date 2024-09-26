@@ -17,7 +17,7 @@ class ModelWrapper(nn.Module):
         with torch.no_grad():
             # print(f"args: {args} kwargs: {kwargs}")
             outputs = self.model.forward(input_ids=x)
-            print(f"outputs.shape: {outputs.logits.shape}")
+            #print(f"outputs.shape: {outputs.logits.shape}")
             return outputs.logits
 
     def setup_caches(self, max_batch_size, dtype):
