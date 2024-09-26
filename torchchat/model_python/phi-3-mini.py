@@ -14,7 +14,7 @@ class ModelWrapper(nn.Module):
 
     def forward(self, *args, **kwargs) -> torch.Tensor:
         # print(f"args: {args} kwargs: {kwargs}")
-        outputs = self.model.forward(*args, **kwargs)
+        outputs = self.model.generate(*args, **kwargs,  max_new_tokens=1, do_sample=False,)
         # print(f"outputs.logits: {outputs.logits}")
         return outputs.logits[:, -1:, ]
 
