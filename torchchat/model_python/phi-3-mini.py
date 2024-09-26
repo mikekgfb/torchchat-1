@@ -12,10 +12,10 @@ class ModelWrapper(nn.Module):
         self.config = config
         self.model = model.eval()
 
-    def forward(self, *args, **kwargs) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, input_pos: Optional[torch.Tensor] = None) -> torch.Tensor:
         with torch.no_grad():
             # print(f"args: {args} kwargs: {kwargs}")
-            outputs = self.model.generate(*args, **kwargs,  max_new_tokens=1, do_sample=False,)
+            outputs = self.model.generate(input_ids=x, max_new_tokens=1, do_sample=False,)
             # print(f"outputs.logits: {outputs.logits}")
             return outputs.logits[:, -1:, ]
 
