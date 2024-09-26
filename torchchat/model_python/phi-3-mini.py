@@ -2,7 +2,7 @@
 import torch
 import torch.nn as nn
 import types
-from types import Optional
+from typing import Optional
 
 from transformers import AutoModelForCausalLM # , AutoTokenizer, pipeline
 from torchchat.model import ModelArgs, ModelType, TextOnlyModel, TransformerArgs
