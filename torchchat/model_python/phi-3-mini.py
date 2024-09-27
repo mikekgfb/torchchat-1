@@ -50,6 +50,17 @@ def model_builder(builder_args) -> nn.Module:
         model_type=ModelType.TextOnly,
         use_tiktoken=False)
 
+    from types import MethodType
+
+    def forward(self, *args, **kwargs):
+        print(f"args {args} kwargs: {kwargs}")
+        output = self.orig_forward(*args, **kwargs)
+        print(f"output.logits: {output.logits}")
+        return output
+
+    model.orig_forward = model.forward
+    model.forward = MethodType(forward, model)
+
     model = ModelWrapper(TransformerArgs(), model)
 
     model = TextOnlyModel(model_config, {"text" : model})
