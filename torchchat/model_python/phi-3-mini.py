@@ -16,7 +16,7 @@ class ModelWrapper(nn.Module):
     def forward(self, x: torch.Tensor, input_pos: Optional[torch.Tensor] = None) -> torch.Tensor:
         with torch.no_grad():
             # print(f"args: {args} kwargs: {kwargs}")
-            outputs = self.model.forward(input_ids=x, position_ids=input_pos)
+            outputs = self.model.forward(input_ids=[x], position_ids=input_pos)
             #print(f"outputs.shape: {outputs.logits.shape}")
             return outputs.logits
 
