@@ -16,7 +16,7 @@ class ModelWrapper(nn.Module):
     def forward(self, x: torch.Tensor, input_pos: Optional[torch.Tensor] = None) -> torch.Tensor:
         with torch.no_grad():
             # print(f"args: {args} kwargs: {kwargs}")
-            attention_mask=torch.ones(dtype=torch.int64, size=(1,input_pos[-1]))
+            attention_mask=torch.ones(dtype=torch.int64, size=(1,input_pos[-1]+1))
             outputs = self.model.forward(input_ids=x, position_ids=input_pos.unsqueeze(0), attention_mask=attention_mask)
             #print(f"outputs.shape: {outputs.logits.shape}")
             return outputs.logits
