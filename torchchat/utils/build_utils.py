@@ -115,11 +115,21 @@ precision = torch.float32
 
 
 def set_precision(dtype):
+    """set_precision() is an internal API that records the dtype we're building the model for.  
+This precision is recorded for future queries by get_precision(), so that when building a model,
+or performing optimizations, we can query the type the user is building the model for. 
+This is an informational value that can be used when we want to know what type to build for (e.g., a kv cache).  
+Changing the `precision` does not change the precision of the model.
+"""
+
     global precision
     precision = dtype
 
 
 def get_precision():
+        """get_precision() is an internal API that returns the dtype we're building the model for, as specified by the `--dtype` CLI option+,
+or the precision quantizer.
+"""
     global precision
     return precision
 
