@@ -23,7 +23,8 @@ jobs:
         uname -a
         echo "::endgroup::"
 
-        TORCHCHAT_DEVICE=cpu .ci/scripts/run-docs readme
+        # pip3 not available
+        # TORCHCHAT_DEVICE=cpu .ci/scripts/run-docs readme
 
         echo "::group::Completion"
         echo "tests complete"
@@ -45,7 +46,8 @@ jobs:
         uname -a
         echo "::endgroup::"
 
-        TORCHCHAT_DEVICE=cpu .ci/scripts/run-docs quantization
+        # pip3 not available
+        # TORCHCHAT_DEVICE=cpu .ci/scripts/run-docs quantization
 
   test-gguf-cpu:
     uses: pytorch/test-infra/.github/workflows/linux_job.yml@main
@@ -62,7 +64,8 @@ jobs:
         uname -a
         echo "::endgroup::"
 
-        TORCHCHAT_DEVICE=cpu .ci/scripts/run-docs gguf
+        # pip3 not available
+        # TORCHCHAT_DEVICE=cpu .ci/scripts/run-docs gguf
 
         echo "::group::Completion"
         echo "tests complete"
@@ -84,7 +87,8 @@ jobs:
         uname -a
         echo "::endgroup::"
 
-        TORCHCHAT_DEVICE=cpu .ci/scripts/run-docs advanced
+        # pip3 not available
+        # TORCHCHAT_DEVICE=cpu .ci/scripts/run-docs advanced
 
         echo "::group::Completion"
         echo "tests complete"
@@ -106,7 +110,8 @@ jobs:
         uname -a
         echo "::endgroup::"
 
-        TORCHCHAT_DEVICE=cpu .ci/scripts/run-docs evaluation
+        # pip3 not available
+        # TORCHCHAT_DEVICE=cpu .ci/scripts/run-docs evaluation
 
         echo "::group::Completion"
         echo "tests complete"
